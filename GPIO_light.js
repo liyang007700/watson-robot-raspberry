@@ -269,6 +269,63 @@ function breathLight(onOffBoolean, timeOut) {
         }
     }
 }*/
+function initKey() {
+    setInterval(function() {
+        testKey1();
+        testKey2();
+        testKey3();
+        testKey4();
+    }, 1);
+}
+
+function startFlowLED(period) {
+    setInterval(function() {
+        if (flowCount > 7) {
+            flowCount = 0;
+        } else {
+            flowCount++;
+        }
+        let keyDownNum = getKeyDownNum();
+        switch (keyDownNum) {
+            case 1:
+                flowLight(flowCount);
+                break;
+            case 2:
+                halfToggleLight(flowCount);
+                break;
+            case 3:
+                toggleLight(flowCount);
+                break;
+            case 4:
+                shutDown(flowCount);
+                break;
+        }
+    }, period);
+}
+
+function startBreathLED(period) {
+    setInterval(function() {
+        if (rPwm > 1024) {
+            rPwm = randomGenerate();
+        }
+        rPwm++;
+        if (gPwm > 1024) {
+            gPwm = randomGenerate();
+        }
+        gPwm++;
+        if (bPwm > 1024) {
+            bPwm = randomGenerate();
+        };
+        bPwm++;
+        breathLED(rPwm, gPwm, bPwm);
+    }, period);
+}
+module.exports = {
+    initKey: initKey,
+    startFlowLED: startFlowLED,
+    startBreathLED: startBreathLED
+};
+/*
 module.exports = {
     flowCount: flowCount,
     halfToggleLight: halfToggleLight,
@@ -285,4 +342,4 @@ module.exports = {
     gPwm: gPwm,
     bPwm: bPwm,
     randomGenerate: randomGenerate
-}
+}*/
